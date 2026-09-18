@@ -1,6 +1,6 @@
 services:
   cpu-info:
-    image: ubuntu:24.04
+    image: tugboatqa/ubuntu:noble
     default: true
     commands:
       init:
