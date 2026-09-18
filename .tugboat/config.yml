@@ -1,0 +1,11 @@
+services:
+  cpu-info:
+    image: ubuntu:24.04
+    default: true
+    commands:
+      init:
+        - apt-get update && apt-get install -y util-linux
+      build:
+        - echo "================== INFORMASI CPU CLOUD TUGBOAT =================="
+        - lscpu
+        - echo "================================================================="
