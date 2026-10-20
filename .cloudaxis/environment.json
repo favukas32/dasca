@@ -1,0 +1,11 @@
+{
+  "language": "unknown",
+  "packageManager": null,
+  "image": "ubuntu:24.04",
+  "setup": [],
+  "dev": null,
+  "test": null,
+  "ports": [],
+  "lockfiles": [],
+  "detectedBy": "fallback"
+}
